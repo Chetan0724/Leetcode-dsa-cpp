@@ -1,3 +1,4 @@
+
 /**
  * Definition for a binary tree node.
  * struct TreeNode {
@@ -12,39 +13,36 @@
  */
 class Solution {
 public:
-    int Depth(TreeNode *root)
-    {
-        if(root == NULL)
-        {
+    int height(TreeNode* root) {
+        if (root == NULL) {
             return 0;
         }
 
-        int leftDepth = Depth(root->left);
-        int rightDepth = Depth(root->right);
-
-        int ans = max(leftDepth, rightDepth) + 1;
-
-        return ans;
-
+        int leftHeight = height(root->left);
+        int rightHeight = height(root->right);
+        int finalAns = max(leftHeight, rightHeight) + 1;
+        return finalAns;
     }
 
     bool isBalanced(TreeNode* root) {
+        // Base Case
         if (root == NULL) {
             return true;
         }
 
-        bool AnsOne = isBalanced(root->left);
-        bool AnsTwo = isBalanced(root->right);
+        // CurrNode - Solve
 
-        if (AnsOne == true && AnsTwo == true) {
-            int leftDepth = Depth(root->left);
-            int rightDepth = Depth(root->right);
+        int leftHeight = height(root->left);
+        int rightHeight = height(root->right);
+        int diff = abs(leftHeight - rightHeight);
 
-            if (abs(leftDepth - rightDepth) <= 1) {
-                return true;
-            } else {
-                return false;
-            }
+        bool currNodeAns = (diff <= 1);
+
+        bool leftAns = isBalanced(root->left);
+        bool rightAns = isBalanced(root->right);
+
+        if (currNodeAns && leftAns && rightAns) {
+            return true;
         } else {
             return false;
         }
