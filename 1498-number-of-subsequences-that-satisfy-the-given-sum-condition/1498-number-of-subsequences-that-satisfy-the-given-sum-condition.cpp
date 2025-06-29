@@ -16,7 +16,7 @@ public:
 
         while (l <= r) {
             if (nums[l] + nums[r] <= target) {
-                int diff = r - 1;
+                int diff = r - l;
                 result = (result % M + power[diff]) % M;
                 l++;
             } else {
